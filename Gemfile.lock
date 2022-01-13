@@ -271,9 +271,11 @@ DEPENDENCIES
   stimulus-rails
   tailwindcss-rails
   turbo-rails
-  tzinfo-data
   web-console
   webdrivers
+
+RUBY VERSION
+   ruby 3.1.0p0
 
 BUNDLED WITH
    2.3.5
