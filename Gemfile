@@ -12,10 +12,12 @@ group :production do
   gem 'pg'
   gem 'puma', '~> 5.0'
   gem 'rubocop', require: false
+  gem 'slim-rails'
   gem 'sprockets-rails'
   gem 'stimulus-rails'
   gem 'tailwindcss-rails'
   gem 'turbo-rails'
+  gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 end
 
 group :development, :test do
