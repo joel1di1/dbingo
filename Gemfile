@@ -11,8 +11,8 @@ gem 'bootsnap', require: false
 gem 'importmap-rails'
 gem 'jbuilder'
 gem 'pg'
-gem 'puma', '~> 5.0'
-gem 'redis', '~> 4.0'
+gem 'puma'
+gem 'redis'
 gem 'rubocop', require: false
 gem 'slim-rails'
 gem 'sprockets-rails'
