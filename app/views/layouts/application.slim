@@ -14,6 +14,7 @@ html
       .container
         - if current_user.present?
             = "Welcome #{current_user.email}"
+            = link_to 'Sign out', sign_out_path
         - else
           = button_to "Log In with Google", "/auth/google_oauth2"
           - unless Rails.env.production?

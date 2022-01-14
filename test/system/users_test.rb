@@ -7,16 +7,18 @@ class UsersTest < ApplicationSystemTestCase
     @user = create :user
   end
 
-  test 'user can login' do
+  test 'user can login logout' do
     visit root_url
 
     click_on 'Dev login'
 
     fill_in 'name', with: @user.nickname
     fill_in 'email', with: @user.email
-
     click_on 'Sign In'
 
-    assert_text @user.nickname
+    assert_text @user.email
+
+    click_on 'Sign out'
+    assert_text 'Dev login'
   end
 end
