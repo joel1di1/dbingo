@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
   skip_forgery_protection
 
   def create
-    user = User.find_or_create_by!(email: params[:email])
+    user = User.find_or_create_by!(email: request.env['omniauth.auth']['info']['email'])
     session[:user_id] = user.id
 
     redirect_to root_path
