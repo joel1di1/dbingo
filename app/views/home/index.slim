@@ -1,1 +1,29 @@
-<iframe src="https://giphy.com/embed/ummeQH0c3jdm2o3Olp" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/jason-clarke-curb-your-enthusiasm-bingo-larry-david-ummeQH0c3jdm2o3Olp">via GIPHY</a></p>
+#giphyme
+
+javascript:
+  document.addEventListener('DOMContentLoaded', function () {
+	q = "bingo"; // search query
+
+	request = new XMLHttpRequest;
+	request.open('GET', 'https://api.giphy.com/v1/gifs/random?api_key=g23hyf5vQS9FPnQ9gHZhn3jdrehnAdep&tag='+q, true);
+
+	request.onload = function() {
+		console.log('status:' + request.status);
+
+		if (request.status >= 200 && request.status < 400){
+			console.log(request);
+			data = JSON.parse(request.responseText)['data'];
+			console.log(data);
+			document.getElementById("giphyme").innerHTML = '<iframe src="'+ data['embed_url'] +'" class="giphy-embed" allowFullScreen></iframe>';
+		} else {
+			console.log('reached giphy, but API returned an error');
+		 }
+	};
+
+	request.onerror = function(e) {
+		console.log('connection error');
+		console.log(e);
+	};
+
+	request.send();
+  });
