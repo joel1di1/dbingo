@@ -3,7 +3,9 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test 'email is mandatory' do
+    assert_not User.create!(email: nil)
+    assert_not User.create!(email: '')
+    assert_not User.create!(email: '  ')
+  end
 end

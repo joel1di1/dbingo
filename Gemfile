@@ -10,11 +10,11 @@ gem 'rails', '~> 7.0.1'
 gem 'bootsnap', require: false
 gem 'importmap-rails'
 gem 'jbuilder'
-gem 'pg'
-gem 'puma'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
+gem 'pg'
+gem 'puma'
 gem 'redis'
 gem 'rubocop', require: false
 gem 'slim-rails'

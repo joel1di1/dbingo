@@ -16,7 +16,7 @@ html
             = "Welcome #{current_user.email}"
             = link_to 'Sign out', sign_out_path
         - else
-          = button_to "Log In with Google", "/auth/google_oauth2"
+          = button_to "Log In with Google", "/auth/google_oauth2", 'data-turbo': 'false'
           - unless Rails.env.production?
             = button_to "Dev login", "/auth/developer", 'data-turbo': 'false'
       .container.mx-auto.mt-28.px-5.flex
