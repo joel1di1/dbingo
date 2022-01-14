@@ -4,42 +4,19 @@ require 'application_system_test_case'
 
 class UsersTest < ApplicationSystemTestCase
   setup do
-    @user = users(:one)
+    @user = create :user
   end
 
-  test 'visiting the index' do
-    visit users_url
-    assert_selector 'h1', text: 'Users'
-  end
+  test 'user can login' do
+    visit root_url
 
-  test 'should create user' do
-    visit users_url
-    click_on 'New user'
+    click_on 'Dev login'
 
-    fill_in 'Email', with: @user.email
-    fill_in 'Nickname', with: @user.nickname
-    click_on 'Create User'
+    fill_in 'name', with: @user.nickname
+    fill_in 'email', with: @user.email
 
-    assert_text 'User was successfully created'
-    click_on 'Back'
-  end
+    click_on 'Sign In'
 
-  test 'should update User' do
-    visit user_url(@user)
-    click_on 'Edit this user', match: :first
-
-    fill_in 'Email', with: @user.email
-    fill_in 'Nickname', with: @user.nickname
-    click_on 'Update User'
-
-    assert_text 'User was successfully updated'
-    click_on 'Back'
-  end
-
-  test 'should destroy User' do
-    visit user_url(@user)
-    click_on 'Destroy this user', match: :first
-
-    assert_text 'User was successfully destroyed'
+    assert_text @user.nickname
   end
 end
