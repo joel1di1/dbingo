@@ -13,7 +13,8 @@ html
     main
       .container
         - if current_user.present?
-            = "Welcome #{current_user.email}"
+            .text-gray-600 class='dark:text-sky-400'
+              = "Welcome #{current_user.email}"
             = link_to 'Sign out', sign_out_path
         - else
           = button_to "Log In with Google", "/auth/google_oauth2", 'data-turbo': 'false'
