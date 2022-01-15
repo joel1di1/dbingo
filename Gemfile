@@ -17,6 +17,7 @@ gem 'pg'
 gem 'puma'
 gem 'redis'
 gem 'rubocop', require: false
+gem 'simple_form'
 gem 'slim-rails'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
@@ -26,6 +27,7 @@ gem 'turbo-rails'
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
+  gem 'rack_session_access'
 end
 
 group :development do

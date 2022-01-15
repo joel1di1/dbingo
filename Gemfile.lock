@@ -204,6 +204,9 @@ GEM
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
+    rack_session_access (0.2.0)
+      builder (>= 2.0.0)
+      rack (>= 1.0.0)
     rails (7.0.1)
       actioncable (= 7.0.1)
       actionmailbox (= 7.0.1)
@@ -255,6 +258,9 @@ GEM
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2)
+    simple_form (5.1.0)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
     slim (4.1.0)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
@@ -319,10 +325,12 @@ DEPENDENCIES
   omniauth-rails_csrf_protection
   pg
   puma
+  rack_session_access
   rails (~> 7.0.1)
   redis
   rubocop
   selenium-webdriver
+  simple_form
   slim-rails
   sprockets-rails
   stimulus-rails
