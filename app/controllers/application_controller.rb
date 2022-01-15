@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   def login_required
     session[:url_after_sign_in] = request.url.gsub('signout', '')
-    redirect_to new_session_path unless logged_in?
+    redirect_to root_url unless logged_in?
   end
 
   def logged_in?
