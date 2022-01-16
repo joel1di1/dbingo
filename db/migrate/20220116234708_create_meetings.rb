@@ -2,7 +2,7 @@
 
 class CreateMeetings < ActiveRecord::Migration[7.0]
   def change
-    create_table :meetings do |t|
+    create_table :meetings, id: :uuid do |t|
       t.string :title, null: false
       t.datetime :start_at, null: false
       t.datetime :end_at, null: false
