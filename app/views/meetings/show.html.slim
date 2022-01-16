@@ -1,0 +1,21 @@
+p#notice = notice
+
+p
+  strong Title:
+  = @meeting.title
+
+p
+  strong Start at:
+  = @meeting.start_at
+
+p
+  strong End at:
+  = @meeting.end_at
+
+p
+  strong Creator:
+  = @meeting.creator
+
+=> link_to 'Edit', edit_meeting_path(@meeting)
+'|
+=< link_to 'Back', meetings_path

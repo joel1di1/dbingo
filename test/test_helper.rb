@@ -12,3 +12,13 @@ module ActiveSupport
     # Add more helper methods to be used by all tests here...
   end
 end
+
+module ActionDispatch
+  class IntegrationTest
+    include FactoryBot::Syntax::Methods
+
+    def sign_in(user)
+      get '/auth/developer/callback', params: { email: user.email }
+    end
+  end
+end
