@@ -21,8 +21,7 @@ class MeetingsController < ApplicationController
 
   # POST /meetings or /meetings.json
   def create
-    @meeting = Meeting.new(meeting_params)
-    @meeting.creator = current_user
+    @meeting = new_meeting_from_params
 
     respond_to do |format|
       if @meeting.save
@@ -59,6 +58,12 @@ class MeetingsController < ApplicationController
   end
 
   private
+
+  def new_meeting_from_params
+    meeting = Meeting.new(meeting_params)
+    meeting.creator = current_user
+    meeting
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_meeting

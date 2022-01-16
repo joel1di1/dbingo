@@ -5,3 +5,7 @@ AllCops:
 
 Style/Documentation:
   Enabled: false
+
+Layout/LineLength:
+  Exclude:
+    - config/initializers/simple_form.rb
