@@ -4,9 +4,9 @@ require 'test_helper'
 
 class MeetingsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @meeting = create :meeting
-
     @user = create :user
+    @meeting = create :meeting, creator: @user
+
     sign_in(@user)
   end
 
@@ -50,6 +50,16 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
   test 'should destroy meeting' do
     assert_difference('Meeting.count', -1) do
       delete meeting_url(@meeting)
+    end
+
+    assert_redirected_to my_meetings_url
+  end
+
+  test 'cannnot destroy meeting when no creator' do
+    other_meeting = create :meeting
+
+    assert_no_difference('Meeting.count') do
+      delete meeting_url(other_meeting)
     end
 
     assert_redirected_to my_meetings_url

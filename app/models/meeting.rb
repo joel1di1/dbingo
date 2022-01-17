@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Meeting < ApplicationRecord
+  self.implicit_order_column = 'created_at'
+
   belongs_to :creator, class_name: 'User', foreign_key: :creator_id
   has_many :meeting_members, dependent: :destroy
   has_many :users, through: :meeting_members

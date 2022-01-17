@@ -49,11 +49,18 @@ class MeetingsController < ApplicationController
 
   # DELETE /meetings/1 or /meetings/1.json
   def destroy
-    @meeting.destroy
+    if @meeting.creator == current_user
+      @meeting.destroy!
 
-    respond_to do |format|
-      format.html { redirect_to my_meetings_url, notice: 'Meeting was successfully destroyed.' }
-      format.json { head :no_content }
+      respond_to do |format|
+        format.html { redirect_to my_meetings_url, notice: 'Meeting was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to my_meetings_url, notice: 'You can\'t destroy a meeting you didn\'t create' }
+        format.json { head :no_content }
+      end
     end
   end
 

@@ -18,5 +18,4 @@ class JoinMeetingTest < ApplicationSystemTestCase
 
     assert_text 'Meeting joined!'
   end
-
 end

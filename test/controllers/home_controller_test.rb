@@ -17,5 +17,4 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to my_meetings_path
   end
-
 end

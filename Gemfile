@@ -15,7 +15,7 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
 gem 'pg'
 gem 'puma'
-gem "pundit"
+gem 'pundit'
 gem 'redis'
 gem 'rubocop', require: false
 gem 'simple_form'
