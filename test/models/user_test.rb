@@ -8,4 +8,12 @@ class UserTest < ActiveSupport::TestCase
     assert_raise { User.create!(email: '') }
     assert_raise { User.create!(email: '  ') }
   end
+
+  test 'to_s shows nickname' do
+    user = create :user
+    assert_equal user.nickname, user.to_s
+
+    user = create :user, nickname: nil
+    assert_equal user.email, user.to_s
+  end
 end

@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    title
+      | Meet Bingo
+    meta[name="viewport" content="width=device-width,initial-scale=1"]
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload"
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_importmap_tags
+  body
+    main
+      = render 'layouts/notices'
+      .container
+        - if current_user.present?
+            .welcome class='dark:text-sky-300'
+              = "Welcome #{current_user.email}"
+            = link_to 'Sign out', sign_out_path
+        - else
+          = button_to "Log In with Google", "/auth/google_oauth2", 'data-turbo': 'false'
+          - unless Rails.env.production?
+            = button_to "Dev login", "/auth/developer", 'data-turbo': 'false'
+      .container.mx-auto.mt-28.px-5.flex
+        = yield

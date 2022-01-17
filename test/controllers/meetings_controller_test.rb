@@ -10,8 +10,8 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
     sign_in(@user)
   end
 
-  test 'should get index' do
-    get meetings_url
+  test 'should get my_meetings' do
+    get my_meetings_url
     assert_response :success
   end
 
@@ -52,6 +52,6 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
       delete meeting_url(@meeting)
     end
 
-    assert_redirected_to meetings_url
+    assert_redirected_to my_meetings_url
   end
 end
