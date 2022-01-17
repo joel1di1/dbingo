@@ -14,4 +14,7 @@ p
   strong Creator:
   = @meeting.creator
 
-=> link_to 'Edit', edit_meeting_path(@meeting)
+=> link_to 'Edit', edit_meeting_path(@meeting) if @meeting.creator == current_user
+
+- unless @meeting.users.include?(current_user)
+  = button_to 'Join the meeting', meeting_meeting_members_path(meeting_id: @meeting.id, method: :post)

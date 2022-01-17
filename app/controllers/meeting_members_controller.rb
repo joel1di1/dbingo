@@ -22,11 +22,4 @@ class MeetingMembersController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  private
-
-  # Only allow a list of trusted parameters through.
-  def meeting_member_params
-    params.require(:meeting_member).permit(:user_id, :meeting_id)
-  end
 end

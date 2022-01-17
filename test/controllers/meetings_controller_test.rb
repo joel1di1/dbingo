@@ -59,9 +59,9 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
     other_meeting = create :meeting
 
     assert_no_difference('Meeting.count') do
-      delete meeting_url(other_meeting)
+      assert_raise do
+        delete meeting_url(other_meeting)
+      end
     end
-
-    assert_redirected_to my_meetings_url
   end
 end

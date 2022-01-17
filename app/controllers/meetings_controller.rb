@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class MeetingsController < ApplicationController
-  before_action :set_meeting, only: %i[show edit update destroy]
+  before_action :set_meeting, only: %i[show]
+  before_action :set_meeting_for_creator, only: %i[edit update destroy]
 
   # GET /meetings or /meetings.json
   def index
@@ -49,18 +50,11 @@ class MeetingsController < ApplicationController
 
   # DELETE /meetings/1 or /meetings/1.json
   def destroy
-    if @meeting.creator == current_user
-      @meeting.destroy!
+    @meeting.destroy!
 
-      respond_to do |format|
-        format.html { redirect_to my_meetings_url, notice: 'Meeting was successfully destroyed.' }
-        format.json { head :no_content }
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to my_meetings_url, notice: 'You can\'t destroy a meeting you didn\'t create' }
-        format.json { head :no_content }
-      end
+    respond_to do |format|
+      format.html { redirect_to my_meetings_url, notice: 'Meeting was successfully destroyed.' }
+      format.json { head :no_content }
     end
   end
 
@@ -72,12 +66,14 @@ class MeetingsController < ApplicationController
     meeting
   end
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_meeting
     @meeting = Meeting.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
+  def set_meeting_for_creator
+    @meeting = Meeting.where(creator: current_user).find(params[:id])
+  end
+
   def meeting_params
     params.require(:meeting).permit(:title, :start_at, :end_at)
   end

@@ -9,3 +9,6 @@ Style/Documentation:
 Layout/LineLength:
   Exclude:
     - config/initializers/simple_form.rb
+
+Metrics/MethodLength:
+  Max: 20
