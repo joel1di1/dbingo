@@ -1,5 +1,5 @@
 doctype html
-html
+html.h-full.bg-gray-100
   head
     title
       | Meet Bingo
@@ -9,17 +9,39 @@ html
     = stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload"
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_importmap_tags
-  body
-    main
-      = render 'layouts/notices'
-      .container
-        - if current_user.present?
-            .welcome class='dark:text-sky-300'
-              = "Welcome #{current_user.email}"
-            = link_to 'Sign out', sign_out_path
-        - else
-          = button_to "Log In with Google", "/auth/google_oauth2", 'data-turbo': 'false'
-          - unless Rails.env.production?
-            = button_to "Dev login", "/auth/developer", 'data-turbo': 'false'
-      .container.mx-auto.mt-28.px-5.flex
+  body.h-full
+    = render 'layouts/notices'
+
+    - if current_user.present?
+      .min-h-full
+        nav.bg-gray-800
+          .max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8
+            .flex.items-center.justify-between.h-16
+              .flex.items-center
+                .flex-shrink-0
+                  img[src="https://upload.wikimedia.org/wikipedia/commons/f/fb/Bingo_card_-_02.jpg" width="40" height="40"]
+                .md:block
+                  .ml-10.flex.items-baseline.space-x-4
+                    = link_to 'My meetings', my_meetings_path, class: 'bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium', 'aria-current' => 'page'
+                    / a.text-gray-300.hover:bg-gray-700.hover:text-white.px-3.py-2.rounded-md.text-sm.font-medium[href="#"]
+                    /   | Team
+              .md:block
+                .ml-4.flex.items-center.md:ml-6
+                  .ml-3.relative
+                    div.text-gray-300
+                      .welcome
+                        = current_user.email
+                      = link_to 'Sign out', sign_out_path
         = yield
+    - else
+      .bg-gray-100
+        .max-w-7xl.mx-auto.py-12.px-4.sm:px-6.lg:px-8
+          div
+            h3.text-lg.leading-6.font-medium.text-gray-900
+              | Sign in
+            dl.mt-5.grid.grid-cols-1.gap-5.sm:grid-cols-2
+              .px-4.py-5.bg-white.shadow.rounded-lg.overflow-hidden.sm:p-6
+                = button_to "Log In with Google", "/auth/google_oauth2", 'data-turbo': 'false', class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              - unless Rails.env.production?
+                .px-4.py-5.bg-white.shadow.rounded-lg.overflow-hidden.sm:p-6
+                  = button_to "Dev login", "/auth/developer", 'data-turbo': 'false', class: "inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
