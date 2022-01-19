@@ -1,15 +1,30 @@
-= simple_form_for(meeting) do |f|
-  = f.error_notification
-  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+= simple_form_for(meeting, class: 'space-y-8 divide-y divide-gray-200') do |f|
+  .space-y-8.divide-y.divide-gray-200.sm:space-y-5
+    div
+      div
+        p.mt-1.max-w-2xl.text-sm.text-gray-500
+          |  This information will be displayed publicly so be careful what you share.
+      .mt-6.sm:mt-5.space-y-6.sm:space-y-5
+        = f.input :title, label_html: { class: 'block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2' }, input_html: { class: 'block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md'}, wrapper_html: {class: 'sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5'}
 
-  .form-inputs
-    = f.input :title
-    = f.input :start_at
-    = f.input :end_at
+        .sm:grid.sm:grid-cols-3.sm:gap-4.sm:items-start.sm:border-t.sm:border-gray-200.sm:pt-5
+          label.block.text-sm.font-medium.text-gray-700.sm:mt-px.sm:pt-2
+            | Start at
+          div
+            = f.input :start_at, label: false, wrapper: false, input_html: { class: 'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md'}
+        .sm:grid.sm:grid-cols-3.sm:gap-4.sm:items-start.sm:border-t.sm:border-gray-200.sm:pt-5
+          label.block.text-sm.font-medium.text-gray-700.sm:mt-px.sm:pt-2
+            | End at
+          div
+            = f.input :end_at, label: false, wrapper: false, input_html: { class: 'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md'}
 
-  .form-actions
-    = f.button :submit
+  .pt-5
+    .flex.justify-center
+      - back_path = meeting.persisted? ? meeting_path(meeting) : my_meetings_path
+      = link_to 'Cancel', back_path, class: 'bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+      = f.button :submit, class: 'ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
 
-= simple_form_for(meeting, method: 'DELETE') do |f|
-  .form-actions
-    = f.button :submit, 'DELETE'
+- if meeting.persisted?
+  = simple_form_for(meeting, method: 'DELETE') do |f|
+    .form-actions
+      = f.button :submit, 'DELETE', class: 'ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500'
