@@ -12,7 +12,7 @@ class MeetingsTest < ApplicationSystemTestCase
 
   test 'visiting the index' do
     visit my_meetings_url
-    assert_selector 'h1', text: 'Listing meetings'
+    assert_selector 'h1', text: 'My Meetings'
   end
 
   test 'should create meeting' do

@@ -6,7 +6,7 @@ class MeetingsController < ApplicationController
 
   # GET /meetings or /meetings.json
   def index
-    @meetings = current_user.meetings
+    @meetings = current_user.meetings.order(start_at: :desc)
   end
 
   # GET /meetings/1 or /meetings/1.json
