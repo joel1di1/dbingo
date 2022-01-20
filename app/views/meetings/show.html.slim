@@ -1,20 +1,31 @@
-p
-  strong Title:
-  = @meeting.title
+main.mt-4.pb-8
+  .max-w-3xl.mx-auto.px-4.sm:px-6.lg:max-w-7xl.lg:px-8
+    .grid.grid-cols-1.gap-4.items-start.lg:grid-cols-3.lg:gap-8
+      .grid.grid-cols-1.gap-4.lg:col-span-2
+        section[aria-labelledby="section-1-title"]
+          h2#section-1-title.sr-only
+            | Section title
+          .rounded-lg.bg-white.overflow-hidden.shadow
+            .p-6
+              | coucou
 
-p
-  strong Start at:
-  = @meeting.start_at
+      .grid.grid-cols-1.gap-4
+        section[aria-labelledby="section-2-title"]
+          h2#section-2-title.sr-only
+            | Section title
+          .rounded-lg.bg-white.overflow-hidden.shadow
+            .p-6
+              p.text-lg.font-bold
+                = @meeting.title
 
-p
-  strong End at:
-  = @meeting.end_at
+              p
+                = "#{@meeting.start_at.to_formatted_s(:short)} - #{@meeting.end_at.to_formatted_s(:short)}"
 
-p
-  strong Creator:
-  = @meeting.creator
-
-=> link_to 'Edit', edit_meeting_path(@meeting) if @meeting.creator == current_user
+              p
+                | created by:&nbsp;
+                = @meeting.creator
+              p.py-2.flex.justify-center
+                => link_to 'Edit', edit_meeting_path(@meeting), class: 'ml-3 inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500' if @meeting.creator == current_user
 
 - unless @meeting.users.include?(current_user)
   = button_to 'Join the meeting', meeting_meeting_members_path(meeting_id: @meeting.id, method: :post)
