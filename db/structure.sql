@@ -33,6 +33,39 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: bets; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.bets (
+    id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    meeting_id uuid NOT NULL,
+    text character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: bets_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.bets_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.bets_id_seq OWNED BY public.bets.id;
+
+
+--
 -- Name: meeting_members; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -121,6 +154,13 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: bets id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bets ALTER COLUMN id SET DEFAULT nextval('public.bets_id_seq'::regclass);
+
+
+--
 -- Name: meeting_members id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -140,6 +180,14 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: bets bets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bets
+    ADD CONSTRAINT bets_pkey PRIMARY KEY (id);
 
 
 --
@@ -175,6 +223,13 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: index_bets_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_bets_on_user_id ON public.bets USING btree (user_id);
+
+
+--
 -- Name: index_meeting_members_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -186,6 +241,22 @@ CREATE INDEX index_meeting_members_on_user_id ON public.meeting_members USING bt
 --
 
 CREATE INDEX index_meetings_on_creator_id ON public.meetings USING btree (creator_id);
+
+
+--
+-- Name: bets fk_rails_87dbfdd206; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bets
+    ADD CONSTRAINT fk_rails_87dbfdd206 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: bets fk_rails_8b66107fe2; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.bets
+    ADD CONSTRAINT fk_rails_8b66107fe2 FOREIGN KEY (meeting_id) REFERENCES public.meetings(id);
 
 
 --
@@ -222,6 +293,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220113230843'),
 ('20220116223218'),
 ('20220116234708'),
-('20220116234709');
+('20220116234709'),
+('20220120001713');
 
 
