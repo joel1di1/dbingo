@@ -21,9 +21,14 @@ class UserTest < ActiveSupport::TestCase
     user = create :user
     meeting = create :meeting, creator: user
 
-    text = 'some text'
-    assert_difference 'user.bets_on(meeting).count' do
-      user.bet_on!(meeting, text)
+    Bet::MAX_BET_PER_MEETING.times do
+      assert_difference 'user.bets_on(meeting).count' do
+        user.bet_on!(meeting, Faker::Quote.most_interesting_man_in_the_world)
+      end
+    end
+
+    assert_raise do
+      user.bet_on!(meeting, Faker::Quote.most_interesting_man_in_the_world)
     end
   end
 
