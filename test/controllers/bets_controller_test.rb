@@ -4,7 +4,10 @@ require 'test_helper'
 
 class BetsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @bet = bets(:one)
+    @user = create :user
+    @bet = create :bet
+
+    sign_in(@user)
   end
 
   test 'should get index' do

@@ -4,12 +4,15 @@ require 'application_system_test_case'
 
 class BetsTest < ApplicationSystemTestCase
   setup do
-    @bet = bets(:one)
+    @bet = create :bet
+
+    @user = create :user
+    sign_in(@user)
   end
 
   test 'visiting the index' do
     visit bets_url
-    assert_selector 'h1', text: 'Bets'
+    assert_selector 'h1', text: 'Listing bets'
   end
 
   test 'should create bet' do
