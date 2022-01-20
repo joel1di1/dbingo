@@ -18,7 +18,7 @@ class BetsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create bet' do
     assert_difference('Bet.count') do
-      post meeting_bets_url(meeting_id: @bet.meeting_id), params: { bet: {text: @bet.text } }
+      post meeting_bets_url(meeting_id: @bet.meeting_id), params: { bet: { text: @bet.text } }
     end
 
     assert_redirected_to meeting_url(@meeting)
