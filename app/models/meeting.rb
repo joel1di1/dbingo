@@ -9,14 +9,6 @@ class Meeting < ApplicationRecord
 
   before_create :add_creator_as_member
 
-  def add_member!(user)
-    user.join!(self)
-  end
-
-  def remove_member!(user)
-    user.unjoin!(self)
-  end
-
   private
 
   def add_creator_as_member
