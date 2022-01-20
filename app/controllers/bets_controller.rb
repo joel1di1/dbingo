@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class BetsController < ApplicationController
-  before_action :set_bet, only: %i[ show edit update destroy ]
+  before_action :set_bet, only: %i[show edit update destroy]
 
   # GET /bets or /bets.json
   def index
@@ -7,8 +9,7 @@ class BetsController < ApplicationController
   end
 
   # GET /bets/1 or /bets/1.json
-  def show
-  end
+  def show; end
 
   # GET /bets/new
   def new
@@ -16,8 +17,7 @@ class BetsController < ApplicationController
   end
 
   # GET /bets/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /bets or /bets.json
   def create
@@ -25,7 +25,7 @@ class BetsController < ApplicationController
 
     respond_to do |format|
       if @bet.save
-        format.html { redirect_to bet_url(@bet), notice: "Bet was successfully created." }
+        format.html { redirect_to bet_url(@bet), notice: 'Bet was successfully created.' }
         format.json { render :show, status: :created, location: @bet }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +38,7 @@ class BetsController < ApplicationController
   def update
     respond_to do |format|
       if @bet.update(bet_params)
-        format.html { redirect_to bet_url(@bet), notice: "Bet was successfully updated." }
+        format.html { redirect_to bet_url(@bet), notice: 'Bet was successfully updated.' }
         format.json { render :show, status: :ok, location: @bet }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,19 +52,20 @@ class BetsController < ApplicationController
     @bet.destroy
 
     respond_to do |format|
-      format.html { redirect_to bets_url, notice: "Bet was successfully destroyed." }
+      format.html { redirect_to bets_url, notice: 'Bet was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_bet
-      @bet = Bet.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def bet_params
-      params.require(:bet).permit(:user_id, :meeting_id, :text)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_bet
+    @bet = Bet.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def bet_params
+    params.require(:bet).permit(:user_id, :meeting_id, :text)
+  end
 end

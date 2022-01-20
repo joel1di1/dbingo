@@ -1,45 +1,47 @@
-require "test_helper"
+# frozen_string_literal: true
+
+require 'test_helper'
 
 class BetsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @bet = bets(:one)
   end
 
-  test "should get index" do
+  test 'should get index' do
     get bets_url
     assert_response :success
   end
 
-  test "should get new" do
+  test 'should get new' do
     get new_bet_url
     assert_response :success
   end
 
-  test "should create bet" do
-    assert_difference("Bet.count") do
+  test 'should create bet' do
+    assert_difference('Bet.count') do
       post bets_url, params: { bet: { meeting_id: @bet.meeting_id, text: @bet.text, user_id: @bet.user_id } }
     end
 
     assert_redirected_to bet_url(Bet.last)
   end
 
-  test "should show bet" do
+  test 'should show bet' do
     get bet_url(@bet)
     assert_response :success
   end
 
-  test "should get edit" do
+  test 'should get edit' do
     get edit_bet_url(@bet)
     assert_response :success
   end
 
-  test "should update bet" do
+  test 'should update bet' do
     patch bet_url(@bet), params: { bet: { meeting_id: @bet.meeting_id, text: @bet.text, user_id: @bet.user_id } }
     assert_redirected_to bet_url(@bet)
   end
 
-  test "should destroy bet" do
-    assert_difference("Bet.count", -1) do
+  test 'should destroy bet' do
+    assert_difference('Bet.count', -1) do
       delete bet_url(@bet)
     end
 

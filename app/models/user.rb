@@ -13,12 +13,12 @@ class User < ApplicationRecord
   def bet_on!(meeting, text)
     meeting = meetings.find(meeting.id)
 
-    bets << Bet.new(meeting: meeting, text: text)
+    bets << Bet.new(meeting:, text:)
   end
 
   def bets_on(meeting)
     meeting = meetings.find(meeting.id)
 
-    bets.where(meeting: meeting)
+    bets.where(meeting:)
   end
 end
