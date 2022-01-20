@@ -13,21 +13,18 @@ class BetsTest < ApplicationSystemTestCase
 
   test 'should create bet' do
     visit meeting_url(@meeting)
-    click_on 'New Bet'
+    click_on 'Create Bet'
 
-    fill_in 'Meeting', with: @bet.meeting_id
-    fill_in 'Text', with: @bet.text
-    fill_in 'User', with: @bet.user_id
+    fill_in 'bet[text]', with: @bet.text
     click_on 'Create Bet'
 
     assert_text 'Bet was successfully created'
-    click_on 'Back'
   end
 
   test 'should destroy Bet' do
     visit meeting_url(@meeting)
 
-    click_on 'Destroy', match: :first
+    click_on 'X', match: :first
 
     assert_text 'Bet was successfully destroyed'
   end

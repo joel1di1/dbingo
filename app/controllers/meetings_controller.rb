@@ -12,6 +12,7 @@ class MeetingsController < ApplicationController
   # GET /meetings/1 or /meetings/1.json
   def show
     @bets = current_user.bets_on(@meeting) if current_user.member_of?(@meeting)
+    @new_bet = Bet.new
   end
 
   # GET /meetings/new
