@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :bets
   resources :meetings, only: %i[create show update new edit destroy] do
     resources :meeting_members, only: %i[create destroy]
   end
