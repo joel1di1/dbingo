@@ -5,49 +5,30 @@ require 'test_helper'
 class BetsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = create :user
-    @bet = create :bet
+    @meeting = create :meeting, creator: @user
+    @bet = create :bet, user: @user, meeting: @meeting
 
     sign_in(@user)
   end
 
   test 'should get index' do
-    get bets_url
-    assert_response :success
-  end
-
-  test 'should get new' do
-    get new_bet_url
+    get meeting_bets_url(meeting_id: @meeting.id)
     assert_response :success
   end
 
   test 'should create bet' do
     assert_difference('Bet.count') do
-      post bets_url, params: { bet: { meeting_id: @bet.meeting_id, text: @bet.text, user_id: @bet.user_id } }
+      post meeting_bets_url(meeting_id: @bet.meeting_id), params: { bet: {text: @bet.text } }
     end
 
-    assert_redirected_to bet_url(Bet.last)
-  end
-
-  test 'should show bet' do
-    get bet_url(@bet)
-    assert_response :success
-  end
-
-  test 'should get edit' do
-    get edit_bet_url(@bet)
-    assert_response :success
-  end
-
-  test 'should update bet' do
-    patch bet_url(@bet), params: { bet: { meeting_id: @bet.meeting_id, text: @bet.text, user_id: @bet.user_id } }
-    assert_redirected_to bet_url(@bet)
+    assert_redirected_to meeting_url(@meeting)
   end
 
   test 'should destroy bet' do
     assert_difference('Bet.count', -1) do
-      delete bet_url(@bet)
+      delete meeting_bet_url(@meeting, @bet)
     end
 
-    assert_redirected_to bets_url
+    assert_redirected_to meeting_url(@meeting)
   end
 end

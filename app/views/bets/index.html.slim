@@ -16,10 +16,5 @@ table
         td = bet.user
         td = bet.meeting
         td = bet.text
-        td = link_to 'Show', bet
-        td = link_to 'Edit', edit_bet_path(bet)
-        td = link_to 'Destroy', bet, data: { confirm: 'Are you sure?' }, method: :delete
+        td = link_to 'Destroy', meeting_bet_path(bet.meeting, bet), data: { confirm: 'Are you sure?' }, method: :delete
 
-br
-
-= link_to 'New Bet', new_bet_path

@@ -2,47 +2,19 @@
 
 class BetsController < ApplicationController
   before_action :set_bet, only: %i[show edit update destroy]
+  before_action :set_meeting
 
   # GET /bets or /bets.json
   def index
-    @bets = Bet.all
+    @bets = current_user.bets.where(meeting: @meeting)
   end
-
-  # GET /bets/1 or /bets/1.json
-  def show; end
-
-  # GET /bets/new
-  def new
-    @bet = Bet.new
-  end
-
-  # GET /bets/1/edit
-  def edit; end
 
   # POST /bets or /bets.json
   def create
-    @bet = Bet.new(bet_params)
-
     respond_to do |format|
-      if @bet.save
-        format.html { redirect_to bet_url(@bet), notice: 'Bet was successfully created.' }
-        format.json { render :show, status: :created, location: @bet }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @bet.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /bets/1 or /bets/1.json
-  def update
-    respond_to do |format|
-      if @bet.update(bet_params)
-        format.html { redirect_to bet_url(@bet), notice: 'Bet was successfully updated.' }
-        format.json { render :show, status: :ok, location: @bet }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @bet.errors, status: :unprocessable_entity }
+      if current_user.bet_on!(@meeting, bet_params[:text])
+        format.html { redirect_to meeting_url(@meeting), notice: 'Bet was successfully created.' }
+        format.json { render :show, status: :created }
       end
     end
   end
@@ -52,7 +24,7 @@ class BetsController < ApplicationController
     @bet.destroy
 
     respond_to do |format|
-      format.html { redirect_to bets_url, notice: 'Bet was successfully destroyed.' }
+      format.html { redirect_to meeting_url(@bet.meeting), notice: 'Bet was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -64,8 +36,12 @@ class BetsController < ApplicationController
     @bet = Bet.find(params[:id])
   end
 
+  def set_meeting
+    @meeting = current_user.meetings.find(params[:meeting_id])
+  end
+
   # Only allow a list of trusted parameters through.
   def bet_params
-    params.require(:bet).permit(:user_id, :meeting_id, :text)
+    params.require(:bet).permit(:text)
   end
 end

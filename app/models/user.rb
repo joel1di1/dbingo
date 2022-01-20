@@ -22,4 +22,16 @@ class User < ApplicationRecord
 
     bets.where(meeting:)
   end
+
+  def member_of?(meeting)
+    meetings.include?(meeting)
+  end
+
+  def join!(meeting)
+    meetings << meeting unless meetings.include?(meeting)
+  end
+
+  def unjoin!(meeting)
+    meetings.delete(meeting)
+  end
 end

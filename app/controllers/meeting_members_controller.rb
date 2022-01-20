@@ -3,7 +3,7 @@
 class MeetingMembersController < ApplicationController
   def create
     @meeting = Meeting.find(params[:meeting_id])
-    @meeting.add_member!(current_user)
+    current_user.join!(@meeting)
 
     respond_to do |format|
       format.html do
@@ -15,7 +15,7 @@ class MeetingMembersController < ApplicationController
 
   def destroy
     @meeting = Meeting.find(params[:meeting_id])
-    @meeting.remove_member!(current_user)
+    current_user.unjoin!(@meeting)
 
     respond_to do |format|
       format.html { redirect_to root_url, notice: 'Meeting member was successfully destroyed.' }

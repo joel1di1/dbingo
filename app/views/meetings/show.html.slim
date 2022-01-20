@@ -4,10 +4,28 @@ main.mt-4.pb-8
       .grid.grid-cols-1.gap-4.lg:col-span-2
         section[aria-labelledby="section-1-title"]
           h2#section-1-title.sr-only
-            | Section title
+            | My bets
           .rounded-lg.bg-white.overflow-hidden.shadow
             .p-6
-              | My bets
+              - if current_user.member_of?(@meeting)
+                | My bets
+                - if @bets.empty?
+                  .relative.italic.bg-white.px-6.py-5.shadow-sm.flex.items-center.space-x-3.hover:border-gray-400.focus-within:ring-2.focus-within:ring-offset-2.focus-within:ring-indigo-500
+                    | You made no bet for the moment
+
+                - else
+                  .grid.grid-cols-1.gap-4.sm:grid-cols-2
+                    - @bets.each do |bet|
+                      .relative.rounded-lg.border.border-gray-300.bg-white.px-6.py-5.shadow-sm.flex.items-center.space-x-3.hover:border-gray-400.focus-within:ring-2.focus-within:ring-offset-2.focus-within:ring-indigo-500
+                        .flex-1.min-w-0
+                          .focus:outline-none
+                            span.absolute.inset-0[aria-hidden="true"]
+                          p.text-sm.font-medium.text-gray-900
+                            = "\"#{bet.text}\""
+                          p.text-sm.text-gray-500.truncate
+                            = "#{bet.text.split.count} words"
+              - else
+                = button_to 'Join the meeting', meeting_meeting_members_path(meeting_id: @meeting.id, method: :post), class: 'relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-xl font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
 
       .grid.grid-cols-1.gap-4
         section[aria-labelledby="section-2-title"]
@@ -26,6 +44,3 @@ main.mt-4.pb-8
                 = @meeting.creator
               p.py-2.flex.justify-center
                 => link_to 'Edit', edit_meeting_path(@meeting), class: 'ml-3 inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500' if @meeting.creator == current_user
-
-- unless @meeting.users.include?(current_user)
-  = button_to 'Join the meeting', meeting_meeting_members_path(meeting_id: @meeting.id, method: :post)

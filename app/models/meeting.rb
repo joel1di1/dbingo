@@ -10,11 +10,11 @@ class Meeting < ApplicationRecord
   before_create :add_creator_as_member
 
   def add_member!(user)
-    users << user unless users.include?(user)
+    user.join!(self)
   end
 
   def remove_member!(user)
-    users.delete(user)
+    user.unjoin!(self)
   end
 
   private

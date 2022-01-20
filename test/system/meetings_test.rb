@@ -15,6 +15,17 @@ class MeetingsTest < ApplicationSystemTestCase
     assert_selector 'h1', text: 'My Meetings'
   end
 
+  test 'shows meeting details ' do
+    sentence = Faker::Quote.most_interesting_man_in_the_world
+    @user.bet_on!(@meeting, sentence)
+
+    visit my_meetings_url
+    click_on @meeting.title
+
+    assert_text @meeting.title
+    assert_text sentence
+  end
+
   test 'should create meeting' do
     visit my_meetings_url
     click_on 'New Meeting'

@@ -4,20 +4,16 @@ require 'application_system_test_case'
 
 class BetsTest < ApplicationSystemTestCase
   setup do
-    @bet = create :bet
-
     @user = create :user
+    @meeting = create :meeting, creator: @user
+    @bet = create :bet, user: @user, meeting: @meeting
+
     sign_in(@user)
   end
 
-  test 'visiting the index' do
-    visit bets_url
-    assert_selector 'h1', text: 'Listing bets'
-  end
-
   test 'should create bet' do
-    visit bets_url
-    click_on 'New bet'
+    visit meeting_url(@meeting)
+    click_on 'New Bet'
 
     fill_in 'Meeting', with: @bet.meeting_id
     fill_in 'Text', with: @bet.text
@@ -28,22 +24,10 @@ class BetsTest < ApplicationSystemTestCase
     click_on 'Back'
   end
 
-  test 'should update Bet' do
-    visit bet_url(@bet)
-    click_on 'Edit this bet', match: :first
-
-    fill_in 'Meeting', with: @bet.meeting_id
-    fill_in 'Text', with: @bet.text
-    fill_in 'User', with: @bet.user_id
-    click_on 'Update Bet'
-
-    assert_text 'Bet was successfully updated'
-    click_on 'Back'
-  end
-
   test 'should destroy Bet' do
-    visit bet_url(@bet)
-    click_on 'Destroy this bet', match: :first
+    visit meeting_url(@meeting)
+
+    click_on 'Destroy', match: :first
 
     assert_text 'Bet was successfully destroyed'
   end

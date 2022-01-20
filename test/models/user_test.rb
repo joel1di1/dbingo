@@ -49,4 +49,27 @@ class UserTest < ActiveSupport::TestCase
       user.bets_on(meeting)
     end
   end
+
+  test 'member of meeting' do
+    user = create :user
+    meeting = create :meeting
+
+    assert_not user.member_of?(meeting)
+
+    user.join!(meeting)
+    assert user.member_of?(meeting)
+
+    user.unjoin!(meeting)
+    assert_not user.member_of?(meeting)
+  end
+
+  test 'user joins only if not already member, otherwise it do nothing' do
+    meeting = create :meeting
+    user = create :user
+
+    assert_difference 'meeting.reload.users.count' do
+      3.times { user.join!(meeting) }
+    end
+    assert_equal [meeting.creator, user].sort, meeting.users.sort
+  end
 end
