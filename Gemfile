@@ -24,6 +24,8 @@ gem 'sprockets-rails'
 gem 'stimulus-rails'
 gem 'tailwindcss-rails'
 gem 'turbo-rails'
+gem "aws-sdk-s3", require: false
+
 
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]

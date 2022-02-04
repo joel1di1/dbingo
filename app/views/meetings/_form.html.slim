@@ -18,6 +18,12 @@
           div
             = f.input :end_at, label: false, wrapper: false, input_html: { class: 'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md'}
 
+        .sm:grid.sm:grid-cols-3.sm:gap-4.sm:items-start.sm:border-t.sm:border-gray-200.sm:pt-5
+          label.block.text-sm.font-medium.text-gray-700.sm:mt-px.sm:pt-2
+            | transcript
+          div
+            = f.input :transcript, label: false, wrapper: false, input_html: { class: 'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md'}
+
   .pt-5
     .flex.justify-center
       - back_path = meeting.persisted? ? meeting_path(meeting) : my_meetings_path
