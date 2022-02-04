@@ -3,6 +3,7 @@
 class MeetingsController < ApplicationController
   before_action :set_meeting, only: %i[show]
   before_action :set_meeting_for_creator, only: %i[edit update destroy]
+  before_action :only_creator, only: %i[edit update destroy]
 
   # GET /meetings or /meetings.json
   def index
@@ -64,6 +65,10 @@ class MeetingsController < ApplicationController
       format.html { redirect_to my_meetings_url, notice: 'Meeting was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def only_creator
+    redirect_to root_url unless @meeting.creator == current_user
   end
 
   private
