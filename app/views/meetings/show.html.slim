@@ -15,7 +15,7 @@ main.mt-4.pb-8
 
                 - else
                   =render 'bet_section', bets: @my_bets, other: false
-                - if @my_bets.count < Bet::MAX_BET_PER_MEETING
+                - if @my_bets.count < Bet::MAX_BET_PER_MEETING && !@meeting.begun?
                   .relative.rounded-lg.border.border-gray-300.bg-white.px-6.py-5.shadow-sm.flex.items-center.space-x-3.my-5
                     = simple_form_for [@meeting, @new_bet] do |f|
                         p.text-sm.font-medium.text-gray-900

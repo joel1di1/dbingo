@@ -9,6 +9,10 @@ class Meeting < ApplicationRecord
 
   before_create :add_creator_as_member
 
+  def begun?
+    Time.zone.now > start_at
+  end
+
   private
 
   def add_creator_as_member
