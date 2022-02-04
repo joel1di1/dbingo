@@ -42,6 +42,9 @@ class MeetingsController < ApplicationController
 
   # PATCH/PUT /meetings/1 or /meetings/1.json
   def update
+    if meeting_params[:transcript]
+      @meeting.transcript.purge
+    end
     respond_to do |format|
       if @meeting.update(meeting_params)
         format.html { redirect_to meeting_url(@meeting), notice: 'Meeting was successfully updated.' }

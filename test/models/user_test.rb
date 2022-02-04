@@ -72,4 +72,15 @@ class UserTest < ActiveSupport::TestCase
     end
     assert_equal [meeting.creator, user].sort, meeting.users.sort
   end
+
+  test 'we can calculate the score for a given meeting' do
+    meeting = create :meeting
+    text = 'I am super happy to meet you'
+    user = create :user
+    user.join!(meeting)
+    user.bet_on!(meeting, 'super happy')
+    user.bet_on!(meeting, 'meet')
+
+    assert_equal 3, user.compute_score(user.bets_on(meeting), text)
+  end
 end

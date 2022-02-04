@@ -36,4 +36,18 @@ class User < ApplicationRecord
   def unjoin!(meeting)
     meetings.delete(meeting)
   end
+
+  def compute_score(bets, text)
+    score = 0
+    bets.each do |bet|
+      bet_score = bet.text.split.size
+      nb_occur = text.scan(bet.text).size
+      score += bet_score * nb_occur
+    end
+    score
+  end
+
+  def score(meeting)
+    compute_score(bets_on(meeting), meeting.transcript.download)
+  end
 end
