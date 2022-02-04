@@ -11,10 +11,12 @@ class User < ApplicationRecord
   end
 
   def bet_on!(meeting, text)
-    meeting = meetings.find(meeting.id)
-    raise "Max bet number reached for #{self} on #{meeting}" if bets_on(meeting).count >= Bet::MAX_BET_PER_MEETING
+    unless meeting.begun?
+      meeting = meetings.find(meeting.id)
+      raise "Max bet number reached for #{self} on #{meeting}" if bets_on(meeting).count >= Bet::MAX_BET_PER_MEETING
 
-    bets << Bet.new(meeting:, text:)
+      bets << Bet.new(meeting:, text:)
+    end
   end
 
   def bets_on(meeting)
