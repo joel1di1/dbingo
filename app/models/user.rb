@@ -38,16 +38,50 @@ class User < ApplicationRecord
   end
 
   def compute_score(bets, text)
-    score = 0
-    bets.each do |bet|
-      bet_score = bet.text.split.size
-      nb_occur = text.scan(bet.text).size
-      score += bet_score * nb_occur
-    end
-    score
+    count_occurences(bets.map(&:text), text)
+      .map { |bet, occurence_count| bet.split.size * occurence_count }.sum
   end
 
   def score(meeting)
     compute_score(bets_on(meeting), meeting.transcript.download)
   end
+
+  private
+
+  def count_occurences(bets, script)
+    script = script.downcase.gsub(/[[:punct:]]+/, ' ').gsub(/ +/, ' ')
+    bets_score = bets.map!(&:downcase).index_with(0)
+
+    candidates = {}
+
+    script.split.each do |script_word|
+      remaining_candidates = candidates
+      candidates = {}
+
+      remaining_candidates.each do |left, candidate_bet|
+        if left == script_word
+          bets_score[candidate_bet] += 1
+          next
+        end
+        if left =~ /^#{script_word} /
+          left.gsub!(/^#{script_word} /, '')
+          candidates[left] = candidate_bet
+        end
+      end
+
+      bets.each do |candidate_bet|
+        if candidate_bet == script_word
+          bets_score[candidate_bet] += 1
+          next
+        end
+        if candidate_bet =~ /^#{script_word} /
+          left = candidate_bet.gsub(/^#{script_word} /, '')
+          candidates[left] = candidate_bet
+        end
+
+      end
+    end
+    bets_score
+  end
+
 end
