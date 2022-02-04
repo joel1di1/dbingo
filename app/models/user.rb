@@ -64,7 +64,7 @@ class User < ApplicationRecord
           next
         end
         if left =~ /^#{script_word} /
-          left.gsub!(/^#{script_word} /, '')
+          left = left.gsub(/^#{script_word} /, '')
           candidates[left] = candidate_bet
         end
       end
