@@ -6,7 +6,7 @@ class BetsController < ApplicationController
 
   # GET /bets or /bets.json
   def index
-    @bets = current_user.bets.where(meeting: @meeting)
+    @bets = Bet.where(meeting: @meeting)
   end
 
   # POST /bets or /bets.json
