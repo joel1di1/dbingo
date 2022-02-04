@@ -38,8 +38,10 @@ class User < ApplicationRecord
   end
 
   def compute_score(bets, text)
+    bet_originality_scores = bets.to_h { |bet| [bet.text, (20./ Bet.where(text: bet.text, meeting: bet.meeting).count).ceil] }
+
     count_occurences(bets.map(&:text), text)
-      .map { |bet, occurence_count| bet.split.size * occurence_count }.sum
+      .map { |bet, occurence_count| bet.split.size * occurence_count * bet_originality_scores[bet] }.sum
   end
 
   def score(meeting)

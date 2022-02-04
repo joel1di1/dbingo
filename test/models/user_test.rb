@@ -81,7 +81,7 @@ class UserTest < ActiveSupport::TestCase
     user.bet_on!(meeting, 'super happy')
     user.bet_on!(meeting, 'meet')
 
-    assert_equal 3, user.compute_score(user.bets_on(meeting), text)
+    assert_equal 60, user.compute_score(user.bets_on(meeting), text)
   end
 
   test 'counts occurences' do
