@@ -4,8 +4,8 @@ const fs = require("fs");
 const { Readable } = require("stream");
 const wav = require("wav");
 
-MODEL_PATH = "model"
-SPEAKER_MODEL_PATH = "model-spk"
+MODEL_PATH = "/model"
+SPEAKER_MODEL_PATH = "/model-spk"
 FILE_NAME = "source.wav"
 
 if (!fs.existsSync(MODEL_PATH)) {
