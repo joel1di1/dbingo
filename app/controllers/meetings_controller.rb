@@ -22,7 +22,8 @@ class MeetingsController < ApplicationController
   end
 
   # GET /meetings/1/edit
-  def edit; end
+  def edit
+  end
 
   # POST /meetings or /meetings.json
   def create

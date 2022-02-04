@@ -21,7 +21,10 @@
         .sm:grid.sm:grid-cols-3.sm:gap-4.sm:items-start.sm:border-t.sm:border-gray-200.sm:pt-5
           label.block.text-sm.font-medium.text-gray-700.sm:mt-px.sm:pt-2
             | transcript
-          div
+          div.flex-col
+            div.my-5
+              - if meeting.transcript.present?
+                = "The file #{meeting.transcript.filename.to_s} has been already uploaded"
             = f.input :transcript, label: false, wrapper: false, input_html: { class: 'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md'}
 
   .pt-5
