@@ -72,20 +72,14 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
     @meeting.reload
     assert_equal({}, @meeting.compute_score)
 
-    transcript_file = create_transcript('This is amazing')
-
+    @meeting.transcript_text = ('This is amazing')
     assert_equal({@user.email => 0}, @meeting.compute_score)
-  ensure
-    transcript_file&.unlink
   end
 
   test 'it computes score for user with matching bet' do
     create(:bet, user: @user, meeting: @meeting, text: 'amazing')
-
-    transcript_file = create_transcript('This is amazing')
+    @meeting.update(transcript_text: 'This is amazing')
     assert_equal({@user.email => 100}, @meeting.reload.compute_score)
-  ensure
-    transcript_file&.unlink
   end
 
   test 'it computes score for two users with matching bet' do
@@ -95,31 +89,17 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
     create(:bet, user: user2, meeting: @meeting, text: 'amazing')
     assert_equal({}, @meeting.compute_score)
 
-    transcript_file = create_transcript('This is amazing')
+    @meeting.transcript_text = 'This is amazing'
 
     assert_equal({@user.email => 50, user2.email => 50}, @meeting.compute_score)
-  ensure
-    transcript_file&.unlink
   end
 
   test 'it computes score for a two words bet' do
     create(:bet, user: @user, meeting: @meeting, text: 'super happy')
     assert_equal({}, @meeting.compute_score)
 
-    transcript_file = create_transcript('I am super happy, this is amazing')
+    @meeting.transcript_text = 'I am super happy, this is amazing'
 
     assert_equal({@user.email => 200}, @meeting.compute_score)
-  ensure
-    transcript_file&.unlink
-  end
-
-  private
-
-  def create_transcript(text)
-    transcript_file = Tempfile.new('foo_transcript.txt')
-    transcript_file.write(text)
-    transcript_file.close
-    @meeting.transcript.attach(io: File.open(transcript_file.path), filename: 'foo_transcript.txt')
-    transcript_file
   end
 end
