@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Meeting < ApplicationRecord
+  BASE_SCORE = 100
   self.implicit_order_column = 'created_at'
 
   belongs_to :creator, class_name: 'User', foreign_key: :creator_id
@@ -30,7 +31,7 @@ class Meeting < ApplicationRecord
 
   def compute_user_score(bets, text)
     count_occurences(bets.map(&:text), text)
-      .map { |bet, occurence_count| bet.split.size * occurence_count }.sum
+      .map { |bet, occurence_count| bet.split.size * occurence_count * BASE_SCORE }.sum
   end
 
   def count_occurences(bets, script)
