@@ -65,41 +65,4 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'it computes all users scores with 0 when no matching bet' do
-    assert_equal({}, @meeting.compute_score)
-
-    create(:bet, user: @user, meeting: @meeting)
-    @meeting.reload
-    assert_equal({}, @meeting.compute_score)
-
-    @meeting.transcript_text = ('This is amazing')
-    assert_equal({@user.email => 0}, @meeting.compute_score)
-  end
-
-  test 'it computes score for user with matching bet' do
-    create(:bet, user: @user, meeting: @meeting, text: 'amazing')
-    @meeting.update(transcript_text: 'This is amazing')
-    assert_equal({@user.email => 100}, @meeting.reload.compute_score)
-  end
-
-  test 'it computes score for two users with matching bet' do
-    user2 = create(:user)
-    @meeting.users << user2
-    create(:bet, user: @user, meeting: @meeting, text: 'amazing')
-    create(:bet, user: user2, meeting: @meeting, text: 'amazing')
-    assert_equal({}, @meeting.compute_score)
-
-    @meeting.transcript_text = 'This is amazing'
-
-    assert_equal({@user.email => 50, user2.email => 50}, @meeting.compute_score)
-  end
-
-  test 'it computes score for a two words bet' do
-    create(:bet, user: @user, meeting: @meeting, text: 'super happy')
-    assert_equal({}, @meeting.compute_score)
-
-    @meeting.transcript_text = 'I am super happy, this is amazing'
-
-    assert_equal({@user.email => 200}, @meeting.compute_score)
-  end
 end
