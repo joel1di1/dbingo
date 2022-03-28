@@ -72,17 +72,29 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
     create(:bet, user: @user, meeting: @meeting)
     assert_equal({}, @meeting.compute_score)
 
-    transcript_file = Tempfile.new('foo_transcript.txt')
-    transcript_file.write('This is amazing')
-    @meeting.transcript.attach(io: File.open(transcript_file.path), filename: 'foo_transcript.txt')
+    create_transcript('This is amazing')
 
     assert_equal({@user.email => 0}, @meeting.compute_score)
-  ensure
-    transcript_file.close
   end
 
   test 'it computes score for user with matching bet' do
+    create(:meeting_member, meeting: @meeting, user: @user)
+    assert_equal({}, @meeting.compute_score)
 
+    create(:bet, user: @user, meeting: @meeting, text: 'amazing')
+    assert_equal({}, @meeting.compute_score)
 
+    create_transcript('This is amazing')
+
+    assert_equal({@user.email => 1}, @meeting.compute_score)
+  end
+
+  private
+
+  def create_transcript(text)
+    transcript_file = Tempfile.new('foo_transcript.txt')
+    transcript_file.write(text)
+    transcript_file.close
+    @meeting.transcript.attach(io: File.open(transcript_file.path), filename: 'foo_transcript.txt')
   end
 end
