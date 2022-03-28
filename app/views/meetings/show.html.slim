@@ -52,7 +52,7 @@ main.mt-4.pb-8
                 = @meeting.creator
               p.py-2.flex.justify-center
                 => link_to 'Edit', edit_meeting_path(@meeting), class: 'ml-3 inline-flex justify-center py-1 px-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500' if @meeting.creator == current_user
-        - if @meeting.transcript.present?
+        - if @meeting.transcript_text.present?
           .grid.grid-cols-1.gap-4
             section[aria-labelledby="section-2-score"]
               h2#section-2-score.sr-only

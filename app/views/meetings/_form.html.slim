@@ -23,8 +23,8 @@
             | transcript
           div.flex-col
             div.my-5
-              - if meeting.transcript.present?
-                = "The file #{meeting.transcript.filename.to_s} has been already uploaded"
+              - if meeting.transcript_text.present?
+                = "The transcript has been already uploaded"
             = f.input :transcript, label: false, wrapper: false, input_html: { class: 'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md'}
 
   .pt-5

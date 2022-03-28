@@ -17,13 +17,12 @@ class Meeting < ApplicationRecord
   end
 
   def compute_score
-    meeting_transcript = transcript.download
     score_by_bet = bets.group_by { |bet| bet.text.downcase }.transform_values { |bet_array| BASE_SCORE/bet_array.size }
 
-    return {} if meeting_transcript.nil?
+    return {} if transcript_text.nil?
 
     users.each_with_object({}) do |user, scores|
-      scores[user.email] = compute_user_score(user.bets, meeting_transcript, score_by_bet)
+      scores[user.email] = compute_user_score(user.bets, transcript_text, score_by_bet)
     end
   end
 

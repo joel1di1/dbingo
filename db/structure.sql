@@ -207,7 +207,8 @@ CREATE TABLE public.meetings (
     end_at timestamp(6) without time zone NOT NULL,
     creator_id bigint NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    transcript_text text
 );
 
 
@@ -484,6 +485,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220116234709'),
 ('20220120001713'),
 ('20220204101057'),
-('20220204102056');
+('20220204102056'),
+('20220420102056');
 
 

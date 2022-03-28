@@ -38,7 +38,7 @@ class User < ApplicationRecord
   end
 
   def score(meeting)
-    compute_score(bets_on(meeting), meeting.transcript.download)
+    compute_score(bets_on(meeting), meeting.transcript_text)
   end
 
 end

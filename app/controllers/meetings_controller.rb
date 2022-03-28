@@ -45,6 +45,8 @@ class MeetingsController < ApplicationController
   def update
     if meeting_params[:transcript]
       @meeting.transcript.purge
+      @meeting.transcript.attach(meeting_params[:transcript])
+      @meeting.transcript_text = @meeting.transcript.download
     end
     respond_to do |format|
       if @meeting.update(meeting_params)
