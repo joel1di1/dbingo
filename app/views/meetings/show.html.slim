@@ -63,6 +63,6 @@ main.mt-4.pb-8
                     = 'Scores'
 
                   ul
-                    - @meeting.users.each do |user|
+                    - @meeting.compute_score do |user, score|
                       li
-                        = "#{user.to_s} - #{user.score(@meeting)}"
+                        = "#{user.to_s} - #{score}"
