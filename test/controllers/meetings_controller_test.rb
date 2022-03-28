@@ -70,6 +70,7 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
     assert_equal({}, @meeting.compute_score)
 
     create(:bet, user: @user, meeting: @meeting)
+    @meeting.reload
     assert_equal({}, @meeting.compute_score)
 
     transcript_file = create_transcript('This is amazing')
