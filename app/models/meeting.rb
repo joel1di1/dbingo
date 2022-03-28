@@ -7,7 +7,6 @@ class Meeting < ApplicationRecord
   belongs_to :creator, class_name: 'User', foreign_key: :creator_id
   has_many :meeting_members, dependent: :destroy
   has_many :users, through: :meeting_members
-  has_many :bets, through: :users
   has_one_attached :transcript
 
   before_create :add_creator_as_member
@@ -17,12 +16,12 @@ class Meeting < ApplicationRecord
   end
 
   def compute_score
+    bets = Bet.where(meeting: self)
     score_by_bet = bets.group_by { |bet| bet.text.downcase }.transform_values { |bet_array| BASE_SCORE/bet_array.size }
-
     return {} if transcript_text.nil?
 
     users.each_with_object({}) do |user, scores|
-      scores[user.email] = compute_user_score(user.bets, transcript_text, score_by_bet)
+      scores[user.email] = compute_user_score(bets.where(user_id: user.id), transcript_text, score_by_bet)
     end
   end
 
