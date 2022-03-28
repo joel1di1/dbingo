@@ -66,7 +66,6 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'it computes all users scores with 0 when no matching bet' do
-    create(:meeting_member, meeting: @meeting, user: @user)
     assert_equal({}, @meeting.compute_score)
 
     create(:bet, user: @user, meeting: @meeting)
@@ -81,11 +80,10 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'it computes score for user with matching bet' do
-    create(:meeting_member, meeting: @meeting, user: @user)
     create(:bet, user: @user, meeting: @meeting, text: 'amazing')
 
     transcript_file = create_transcript('This is amazing')
-    assert_equal({@user.email => 100}, @meeting.compute_score)
+    assert_equal({@user.email => 100}, @meeting.reload.compute_score)
   ensure
     transcript_file&.unlink
   end
