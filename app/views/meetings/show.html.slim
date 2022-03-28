@@ -62,7 +62,7 @@ main.mt-4.pb-8
                   p.text-lg.font-bold
                     = 'Scores'
 
-                  ul
-                    - @meeting.compute_score do |user, score|
+                  ol
+                    - @meeting.compute_score.each do |user, score|
                       li
                         = "#{user.to_s} - #{score}"

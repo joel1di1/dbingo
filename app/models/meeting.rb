@@ -18,7 +18,7 @@ class Meeting < ApplicationRecord
 
   def compute_score
     meeting_transcript = transcript.download
-    score_by_bet = bets.group_by(&:text).transform_values { |bet_array| BASE_SCORE/bet_array.size }
+    score_by_bet = bets.group_by { |bet| bet.text.downcase }.transform_values { |bet_array| BASE_SCORE/bet_array.size }
 
     return {} if meeting_transcript.nil?
 
