@@ -19,11 +19,12 @@ class Meeting < ApplicationRecord
   def compute_score
     meeting_transcript = transcript.download
     total_number_of_bets = bets.size
-    bets.group_by(&:text).map { |text, bets| [text, total_number_of_bets/bets.size]}.to_hash
+    score_by_bet = bets.group_by(&:text).transform_values { |bet_array| BASE_SCORE * total_number_of_bets/bet_array.size }
 
     return {} if meeting_transcript.nil?
+
     users.each_with_object({}) do |user, scores|
-      scores[user.email] = compute_user_score(user.bets, meeting_transcript)
+      scores[user.email] = compute_user_score(user.bets, meeting_transcript, score_by_bet)
     end
   end
 
@@ -33,9 +34,9 @@ class Meeting < ApplicationRecord
     users << creator
   end
 
-  def compute_user_score(bets, text)
-    count_occurences(bets.map(&:text), text)
-      .map { |bet, occurence_count| bet.split.size * occurence_count * BASE_SCORE }.sum
+  def compute_user_score(bets, script, score_by_bet)
+    count_occurences(bets.map(&:text), script)
+      .map { |bet, occurence_count| (score_by_bet[bet] || 0) * bet.split.size * occurence_count }.sum
   end
 
   def count_occurences(bets, script)

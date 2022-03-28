@@ -76,7 +76,7 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal({@user.email => 0}, @meeting.compute_score)
   ensure
-    transcript_file.unlink
+    transcript_file&.unlink
   end
 
   test 'it computes score for user with matching bet' do
@@ -86,7 +86,7 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
     transcript_file = create_transcript('This is amazing')
     assert_equal({@user.email => 100}, @meeting.compute_score)
   ensure
-    transcript_file.unlink
+    transcript_file&.unlink
   end
 
   test 'it computes score for two users with matching bet' do
@@ -98,9 +98,9 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
 
     transcript_file = create_transcript('This is amazing')
 
-    assert_equal({@user.email => 100, user2.email => 100}, @meeting.compute_score)
+    assert_equal({@user.email => 50, user2.email => 50}, @meeting.compute_score)
   ensure
-    transcript_file.unlink
+    transcript_file&.unlink
   end
 
   test 'it computes score for a two words bet' do
@@ -111,7 +111,7 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal({@user.email => 200}, @meeting.compute_score)
   ensure
-    transcript_file.unlink
+    transcript_file&.unlink
   end
 
   private
