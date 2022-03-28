@@ -72,6 +72,17 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
     create(:meeting_member, meeting:, user:)
     assert_equal({}, meeting.compute_score)
 
+    create(:bet, user:, meeting:)
+    assert_equal({}, meeting.compute_score)
 
+    transcript_file = Tempfile.new('foo_transcript.txt')
+    transcript_file.write('This is amazing')
+    #remote_file = ActiveStorage::Attached::Model.new
+    remote_file = meeting.transcript.attach(transcript_file)
+    remote_file.stub(:download, transcript_file) {
+      meeting.stub(:transcript, remote_file) { assert_equal({}, meeting.compute_score) }
+    }
+  ensure
+    transcript_file.close
   end
 end
