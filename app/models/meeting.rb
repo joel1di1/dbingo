@@ -18,6 +18,9 @@ class Meeting < ApplicationRecord
 
   def compute_score
     meeting_transcript = transcript.download
+    total_number_of_bets = bets.size
+    bets.group_by(&:text).map { |text, bets| [text, total_number_of_bets/bets.size]}.to_hash
+
     return {} if meeting_transcript.nil?
     users.each_with_object({}) do |user, scores|
       scores[user.email] = compute_user_score(user.bets, meeting_transcript)
