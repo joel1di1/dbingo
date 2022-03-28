@@ -65,24 +65,24 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'it computes all users scores' do
-    user = create :user
-    meeting = create :meeting
+  test 'it computes all users scores with 0 when no matching bet' do
+    create(:meeting_member, meeting: @meeting, user: @user)
+    assert_equal({}, @meeting.compute_score)
 
-    create(:meeting_member, meeting:, user:)
-    assert_equal({}, meeting.compute_score)
-
-    create(:bet, user:, meeting:)
-    assert_equal({}, meeting.compute_score)
+    create(:bet, user: @user, meeting: @meeting)
+    assert_equal({}, @meeting.compute_score)
 
     transcript_file = Tempfile.new('foo_transcript.txt')
     transcript_file.write('This is amazing')
-    #remote_file = ActiveStorage::Attached::Model.new
-    remote_file = meeting.transcript.attach(transcript_file)
-    remote_file.stub(:download, transcript_file) {
-      meeting.stub(:transcript, remote_file) { assert_equal({}, meeting.compute_score) }
-    }
+    @meeting.transcript.attach(io: File.open(transcript_file.path), filename: 'foo_transcript.txt')
+
+    assert_equal({@user.email => 0}, @meeting.compute_score)
   ensure
     transcript_file.close
+  end
+
+  test 'it computes score for user with matching bet' do
+
+
   end
 end
