@@ -16,8 +16,9 @@ class Meeting < ApplicationRecord
 
   def compute_score
     meeting_transcript = transcript.download
+    return {} if meeting_transcript.nil?
     users.each_with_object({}) do |user, scores|
-      scores[user.email] = compute_user_score(users.bets, meeting_transcript)
+      scores[user.email] = compute_user_score(user.bets, meeting_transcript)
     end
   end
 

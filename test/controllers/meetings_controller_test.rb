@@ -64,4 +64,14 @@ class MeetingsControllerTest < ActionDispatch::IntegrationTest
       end
     end
   end
+
+  test 'it computes all users scores' do
+    user = create :user
+    meeting = create :meeting
+
+    create(:meeting_member, meeting:, user:)
+    assert_equal({}, meeting.compute_score)
+
+
+  end
 end
