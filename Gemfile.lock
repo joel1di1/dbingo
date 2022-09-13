@@ -154,7 +154,7 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
-    jmespath (1.5.0)
+    jmespath (1.6.1)
     json (2.6.1)
     jwt (2.3.0)
     loofah (2.13.0)
