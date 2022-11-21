@@ -4,7 +4,7 @@ services:
     container_name: dbingo_pg
     image: postgres:14.1
     ports:
-      - '${POSTGRES_PORT:-5432}:5432'
+      - '127.0.0.1:5432:5432'
     environment:
       POSTGRES_USER: ${USER}
       POSTGRES_HOST_AUTH_METHOD: "trust"
